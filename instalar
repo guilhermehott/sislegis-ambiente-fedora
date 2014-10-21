@@ -1,0 +1,48 @@
+#!/bin/bash
+# Author: Paulo Jeronimo (email: paulojeronimo@gmail.com, twitter: @paulojeronimo)
+
+source config
+
+GITHUB_SISLEGIS_DOTFILES=http://github.com/$GITHUB_USER/sislegis-dotfiles
+GITHUB_SISLEGIS_AMBIENTE=http://github.com/$GITHUB_USER/sislegis-ambiente
+INSTALL_DIR=.github.com/$GITHUB_USER
+
+sudo useradd -m -s /bin/bash -G wheel sislegis || {
+    echo "falha ao criar usuário sislegis!"; exit 1; 
+}
+
+[ -d "sislegis" ] && \
+tar cf - sislegis | sudo -u sislegis bash -c "tar xf - -C /home"
+
+cmd="xhost +si:localuser:sislegis"; $cmd
+f=~/.bashrc; grep -q "xhost.*sislegis" $f || echo "$cmd" >> $f
+
+sudo -u sislegis bash <<EOF
+echo 'export DISPLAY=:0' >> ~/.bashrc
+sudo yum -y install git tar unzip wget
+sudo bash -c "cd /tmp; curl http://satya164.github.io/fedy/fedy-installer -o fedy-installer && chmod +x fedy-installer && ./fedy-installer"
+sudo fedy -e oracle_jdk
+cd && mkdir -p $INSTALL_DIR && cd $INSTALL_DIR
+git clone $GITHUB_SISLEGIS_DOTFILES
+${GITHUB_SISLEGIS_DOTFILES##*/}/install
+EOF
+
+cat <<EOF | sudo -u sislegis bash -c 'cat - > ~/.github'
+GITHUB_USER=$GITHUB_USER
+GITHUB_NAME='$GITHUB_NAME'
+GITHUB_EMAIL=$GITHUB_EMAIL
+EOF
+
+tar cf - sislegis-ambiente.instaladores | sudo -u sislegis bash -c "tar xf - -C ~/$INSTALL_DIR"
+
+sudo -u sislegis bash <<EOF
+cd ~/$INSTALL_DIR
+$INSTALADORES_LOCAIS && { 
+    echo "export INSTALA_OPCS='--nao-baixa-instaladores'" >> ~/.bashrc
+    source ~/.bashrc
+}
+git clone $GITHUB_SISLEGIS_AMBIENTE
+${GITHUB_SISLEGIS_AMBIENTE##*/}/instalar
+EOF
+
+# vim: set ts=4 sw=4 expandtab:

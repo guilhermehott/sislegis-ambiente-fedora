@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for d in .m2 .forge
+do
+    sudo rsync -av /home/sislegis/$d sislegis/
+done
