@@ -22,7 +22,7 @@ $X_INSTALADO && {
 sudo -u sislegis bash <<EOF
 $X_INSTALADO && echo 'export DISPLAY=:0' >> ~/.bashrc
 sudo yum -y install tar unzip wget
-sudo bash <(curl -sSL https://satya164.github.io/fedy/fedy-installer)
+curl -sSL https://satya164.github.io/fedy/fedy-installer | sudo bash
 sudo fedy -e oracle_jdk
 cd && mkdir -p $INSTALL_DIR && cd $INSTALL_DIR
 git clone $GITHUB_SISLEGIS_DOTFILES
