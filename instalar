@@ -9,7 +9,9 @@ INSTALL_DIR=.github.com/$GITHUB_USER
 X_INSTALADO=false
 
 sudo useradd -m -s /bin/bash -G wheel sislegis || {
-    echo "falha ao criar usuário sislegis!"; exit 1; 
+    echo "Falha ao criar usuário sislegis."
+    echo "O ambiente já não está instalado?"
+    exit 1; 
 }
 
 type xhost &> /dev/null && X_INSTALADO=true

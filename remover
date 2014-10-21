@@ -1,5 +1,11 @@
 #!/bin/bash
 
-sudo userdel -rf sislegis
+sudo userdel -rf sislegis &> /dev/null || {
+    echo "Falha ao remover o usuário sislegis."
+    echo "O ambiente já não foi removido?"
+    exit
+}
 f=~/.bashrc; e='^xhost.*sislegis$'
 grep -q "$e" $f && { grep -v "$e" $f | tee $f > /dev/null; }
+PIDS=`sudo ps -ef | grep ^sislegis | awk '{print $2}'`
+[ "$PIDS" ] && sudo kill -9 $PIDS
