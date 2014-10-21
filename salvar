@@ -1,6 +1,14 @@
 #!/bin/bash
 
-for d in .m2 .forge
+source config
+
+mkdir -p sislegis
+cd sislegis
+
+for d in \
+  .m2 \
+  .forge \
+  .github.com/$GITHUB_USER/sislegis-ambiente/instaladores 
 do
-    sudo rsync -av /home/sislegis/$d sislegis/
+    sudo rsync -avR /home/sislegis/$d ./
 done

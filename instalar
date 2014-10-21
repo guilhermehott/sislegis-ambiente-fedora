@@ -6,21 +6,23 @@ source config
 GITHUB_SISLEGIS_DOTFILES=http://github.com/$GITHUB_USER/sislegis-dotfiles
 GITHUB_SISLEGIS_AMBIENTE=http://github.com/$GITHUB_USER/sislegis-ambiente
 INSTALL_DIR=.github.com/$GITHUB_USER
+X_INSTALADO=false
 
 sudo useradd -m -s /bin/bash -G wheel sislegis || {
     echo "falha ao criar usuário sislegis!"; exit 1; 
 }
 
-[ -d "sislegis" ] && \
-tar cf - sislegis | sudo -u sislegis bash -c "tar xf - -C /home"
+type xhost &> /dev/null && X_INSTALADO=true
 
-cmd="xhost +si:localuser:sislegis"; $cmd
-f=~/.bashrc; grep -q "xhost.*sislegis" $f || echo "$cmd" >> $f
+$X_INSTALADO && {
+    cmd="xhost +si:localuser:sislegis"; $cmd
+    f=~/.bashrc; grep -q "xhost.*sislegis" $f || echo "$cmd" >> $f
+}
 
 sudo -u sislegis bash <<EOF
-echo 'export DISPLAY=:0' >> ~/.bashrc
-sudo yum -y install git tar unzip wget
-sudo bash -c "cd /tmp; curl http://satya164.github.io/fedy/fedy-installer -o fedy-installer && chmod +x fedy-installer && ./fedy-installer"
+$X_INSTALADO && echo 'export DISPLAY=:0' >> ~/.bashrc
+sudo yum -y install tar unzip wget
+sudo bash <(curl -sSL https://satya164.github.io/fedy/fedy-installer)
 sudo fedy -e oracle_jdk
 cd && mkdir -p $INSTALL_DIR && cd $INSTALL_DIR
 git clone $GITHUB_SISLEGIS_DOTFILES
@@ -33,15 +35,19 @@ GITHUB_NAME='$GITHUB_NAME'
 GITHUB_EMAIL=$GITHUB_EMAIL
 EOF
 
-tar cf - sislegis-ambiente.instaladores | sudo -u sislegis bash -c "tar xf - -C ~/$INSTALL_DIR"
-
 sudo -u sislegis bash <<EOF
 cd ~/$INSTALL_DIR
-$INSTALADORES_LOCAIS && { 
+$BAIXA_INSTALADORES || { 
     echo "export INSTALA_OPCS='--nao-baixa-instaladores'" >> ~/.bashrc
     source ~/.bashrc
 }
 git clone $GITHUB_SISLEGIS_AMBIENTE
+EOF
+
+[ -d "sislegis" ] && ./restaurar
+
+sudo -u sislegis bash <<EOF
+cd ~/$INSTALL_DIR
 ${GITHUB_SISLEGIS_AMBIENTE##*/}/instalar
 EOF
 
