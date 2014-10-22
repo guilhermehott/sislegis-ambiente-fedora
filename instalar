@@ -8,7 +8,7 @@ GITHUB_SISLEGIS_AMBIENTE=http://github.com/$GITHUB_USER/sislegis-ambiente
 INSTALL_DIR=.github.com/$GITHUB_USER
 X_INSTALADO=false
 
-sudo useradd -m -s /bin/bash -G wheel sislegis || {
+sudo useradd -m -s /bin/bash -G wheel sislegis &> /dev/null || {
     echo "Falha ao criar usuário sislegis."
     echo "O ambiente já não está instalado?"
     exit 1; 
@@ -46,7 +46,11 @@ $BAIXA_INSTALADORES || {
 git clone $GITHUB_SISLEGIS_AMBIENTE
 EOF
 
-[ -d "sislegis" ] && ./restaurar
+[ -d "sislegis" ] && {
+    [ "`sudo stat -c %u sislegis/home/sislegis`" != "`sudo id -u sislegis`" ] && \
+    sudo chown -R sislegis: sislegis/home/sislegis
+    ./restaurar
+}
 
 sudo -u sislegis bash <<EOF
 cd ~/$INSTALL_DIR
