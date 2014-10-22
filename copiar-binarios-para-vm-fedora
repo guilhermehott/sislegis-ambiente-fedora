@@ -1,0 +1,14 @@
+#!/bin/bash
+# Author: Paulo Jerônimo (email: paulojeronimo@gmail.com, twitter: paulojeronimo)
+#
+# REQUISITOS:
+# Um túnel reverso para a porta 2222 deve ter sido criado na vm-fedora.
+# A linha iniciando com 'requiretty' deve estar comentada em /etc/sudoers.
+# Ref: http://unix.stackexchange.com/questions/122616/why-do-i-need-a-tty-to-run-sudo-if-i-can-sudo-without-a-password
+
+sudo tar cf - sislegis/ | \
+ssh -p 2222 aluno@localhost \
+'d=~/sislegis-ambiente-fedora; 
+sudo bash -c "tar -xpf - -C $d/
+chown aluno: $d/sislegis"
+find $d/sislegis -name "._*" -delete'
