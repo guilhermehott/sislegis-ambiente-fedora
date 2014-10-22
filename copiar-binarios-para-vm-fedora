@@ -9,6 +9,8 @@
 sudo tar cf - sislegis/ | \
 ssh -p 2222 aluno@localhost \
 'd=~/sislegis-ambiente-fedora; 
-sudo bash -c "tar -xpf - -C $d/
-chown aluno: $d/sislegis"
-find $d/sislegis -name "._*" -delete'
+sudo bash -c "
+rm -rf $d/sislegis
+tar -xpf - -C $d/
+chown aluno: $d/sislegis
+find $d/sislegis -name \"._*\" -delete"'
