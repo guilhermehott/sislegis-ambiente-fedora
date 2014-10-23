@@ -8,6 +8,11 @@ GITHUB_SISLEGIS_AMBIENTE=http://github.com/$GITHUB_USER/sislegis-ambiente
 INSTALL_DIR=.github.com/$GITHUB_USER
 X_INSTALADO=false
 
+sudo sed -i '
+  s/^\(%wheel.*ALL\)/#\1/
+  s/^# \(%wheel.*NOPASSWD.*\)/\1/
+' /etc/sudoers
+
 sudo useradd -m -s /bin/bash -G wheel sislegis &> /dev/null || {
     echo "Falha ao criar usuário sislegis."
     echo "O ambiente já não está instalado?"
