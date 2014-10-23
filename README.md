@@ -13,7 +13,7 @@ A máquina para a execução desse ambiente pode ser real (física), virtual (VM
 
 ### Na [vm-fedora], utilizando o [VirtualBox]
 
-Após baixar e iniciar a vm-fedora em teu ambiente, execute:
+Após baixar, extrair, registrar e iniciar a vm-fedora em teu ambiente, execute:
 ```bash
 # logue-se na console da VM (login: aluno) (Password: @lun0123)
 # execute (substituido 'pj' pelo nome de teu usuário em tua máquina):
@@ -25,11 +25,11 @@ sudo yum -y install git
 
 ### Numa máquina real executando o Fedora
 
-Basta estar logado com um usário com poderes administrativos (privilégios de root concedidos pelo uso do sudo).
+Basta estar logado com um usuário com poderes administrativos (privilégios de `root` concedidos pelo uso do `sudo`).
 
 ### Num contêiner fedora, utilizando o [Docker]
 
-Inicie o contêiner fedora da seguinte forma:
+Execute um contêiner fedora da seguinte forma:
 ```bash
 sudo docker run -it -p 8080:8080 fedora /bin/bash
 ```
