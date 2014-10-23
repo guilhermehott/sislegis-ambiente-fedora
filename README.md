@@ -95,7 +95,7 @@ Para salvar os binários baixados pelo usuário `sislegis` (nos diretórios `.m2
 
 Lembre-se de configurar a variável `BAIXA_INSTALADORES` para `false` no arquivo `config`, antes de solicitar a reinstalação.
 
-O script `restaurar` será chamado automatimcamente pelo script `instalar` no momento necessário.
+O script `restaurar` será chamado automaticamente pelo script `instalar` no momento necessário.
 
 ## Desinstalação do ambiente
 
