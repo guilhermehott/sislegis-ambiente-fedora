@@ -7,7 +7,7 @@ Para construir o [sislegis-app] num ambiente Fedora o primeiro passo é você [f
 * [sislegis-ambiente]
 * [sislegis-app]
 
-A máquina para a execução desse ambiente pode ser real (física) ou virtual (VM). Alternativmente, você também pode montar um contêiner [Docker], rapidamente, com os passos que apresentamos aqui. Enfim, você escolhe a forma como deseja montar o teu ambiente para o sislegis-app dependendo de tuas necessidades.
+A máquina para a execução desse ambiente pode ser real (física) ou virtual (VM). Alternativamente, você também pode montar um contêiner [Docker] com todo o ambiente. Apresentamos, aqui, todos os passos para isso. Enfim, você escolhe a forma como deseja montar o teu ambiente para o sislegis-app dependendo de tuas necessidades.
 
 ## Inicialização e configuração da máquina
 
