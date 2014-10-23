@@ -7,7 +7,7 @@ Para construir o [sislegis-app] num ambiente Fedora o primeiro passo é você [f
 * [sislegis-ambiente]
 * [sislegis-app]
 
-A máquina para a execução desse ambiente pode ser real (física), virtual (VM) ou um contêiner [Docker]. Você escolhe como deseja trabalhar!
+A máquina para a execução desse ambiente pode ser real (física) ou virtual (VM). Alternativmente, você também pode montar um contêiner [Docker], rapidamente, com os passos que apresentamos aqui. Enfim, você escolhe a forma como deseja montar o teu ambiente para o sislegis-app dependendo de tuas necessidades.
 
 ## Inicialização e configuração da máquina
 
@@ -88,12 +88,12 @@ Abra o browser na tua máquina HOST em http://localhost:8080/sislegis. O túnel 
 
 ## Salvamento de binários baixados
 
-Para salvar os binários baixados pelo usuário `sislegis` (nos diretórios `.m2` e `.forge` e `instaladores`) com a finalidade de refazer seu ambiente de forma mais rápida (sem efetuar downloads), execute:
+Para salvar os binários baixados pelo usuário `sislegis` (nos diretórios `.m2` e `.forge` e `instaladores`) com a finalidade de refazer seu ambiente de forma mais rápida (sem repetir downloads já realizados), execute:
 ```bash
 ./salvar
 ```
 
-Lembre-se de configurar a variável `BAIXA_INSTALADORES` para `false` no arquivo `config`, antes de solicitar a reinstalação.
+Caso deseje, você pode configurar a variável `BAIXA_INSTALADORES` para `false` no arquivo `config`, após salvar os instaladores com o comando acima. Isso ainda reduzirá o tempo de instalação das ferramentas pois, dessa forma, o script que faz esse trabalho não tentará refazer download algum.
 
 O script `restaurar` será chamado automaticamente pelo script `instalar` no momento necessário.
 
